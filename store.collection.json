@@ -85,6 +85,73 @@
           "response": []
         },
         {
+          "name": "POST create product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Created product has valid data\", () => {\r",
+                  "    \r",
+                  "    const expectedName = \"orange\";\r",
+                  "    const expectedPrice = 8;\r",
+                  "    const expectedSku = 123321123;\r",
+                  "    const expectedDescription = \"wouh\";\r",
+                  "\r",
+                  "    const response = pm.response.json();\r",
+                  "\r",
+                  "    pm.expect(response.name).to.eql(expectedName);\r",
+                  "    pm.expect(response.price).to.eql(expectedPrice);\r",
+                  "    pm.expect(response.sku).to.eql(expectedSku);\r",
+                  "    pm.expect(response.description).to.eql(expectedDescription);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Created product ID is saved\", () => {\r",
+                  "\r",
+                  "    const response = pm.response.json();\r",
+                  "\r",
+                  "    pm.expect(response).to.have.property(\"id\");\r",
+                  "\r",
+                  "       pm.expect(response.id).to.be.a(\"number\");\r",
+                  "\r",
+                  "    pm.collectionVariables.set(\"productId\", response.id);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"orange\",\r\n    \"price\": 8,\r\n    \"sku\": 123321123,\r\n    \"description\": \"wouh\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+         {
           "name": "GET product by ID",
           "event": [
             {
@@ -151,73 +218,6 @@
               "path": [
                 "products",
                 "{{productId}}"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "POST create product",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 201\", function () {\r",
-                  "    pm.response.to.have.status(201);\r",
-                  "});\r",
-                  "\r",
-                  "pm.test(\"Created product has valid data\", () => {\r",
-                  "    \r",
-                  "    const expectedName = \"orange\";\r",
-                  "    const expectedPrice = 8;\r",
-                  "    const expectedSku = 123321123;\r",
-                  "    const expectedDescription = \"wouh\";\r",
-                  "\r",
-                  "    const response = pm.response.json();\r",
-                  "\r",
-                  "    pm.expect(response.name).to.eql(expectedName);\r",
-                  "    pm.expect(response.price).to.eql(expectedPrice);\r",
-                  "    pm.expect(response.sku).to.eql(expectedSku);\r",
-                  "    pm.expect(response.description).to.eql(expectedDescription);\r",
-                  "});\r",
-                  "\r",
-                  "pm.test(\"Created product ID is saved\", () => {\r",
-                  "\r",
-                  "    const response = pm.response.json();\r",
-                  "\r",
-                  "    pm.expect(response).to.have.property(\"id\");\r",
-                  "\r",
-                  "       pm.expect(response.id).to.be.a(\"number\");\r",
-                  "\r",
-                  "    pm.collectionVariables.set(\"productId\", response.id);\r",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"name\": \"orange\",\r\n    \"price\": 8,\r\n    \"sku\": 123321123,\r\n    \"description\": \"wouh\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{baseUrl}}/products",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "products"
               ]
             }
           },
