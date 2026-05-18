@@ -27,7 +27,7 @@ jobs:
 
       - name: Start mock API
         run: |
-          npm run tern-on-api &
+          npm run turn-on-api &
           sleep 5
 
       - name: Run Postman tests
