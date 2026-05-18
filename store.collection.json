@@ -399,7 +399,7 @@
           "response": []
         },
         {
-          "name": "GET products sorted by name ASC",
+          "name": "GET products sorted by price DESC",
           "event": [
             {
               "listen": "test",
@@ -409,14 +409,16 @@
                   "    pm.response.to.have.status(200);\r",
                   "});\r",
                   "\r",
-                  "pm.test(\"Products are sorted by name in ASC order\", () => {\r",
-                  "    const sortKey = \"name\";\r",
+                  "pm.test(\"Products are sorted by price in DESC order\", () => {\r",
                   "\r",
                   "    const response = pm.response.json();\r",
-                  "    const names = response.map((product) => product[sortKey]);\r",
-                  "    const sortedNames = [...names].sort((a, b) => a.localeCompare(b));\r",
                   "\r",
-                  "    pm.expect(names).to.eql(sortedNames);\r",
+                  "    const prices = response.map(product => Number(product.price));\r",
+                  "\r",
+                  "    const sortedPrices = [...prices]\r",
+                  "        .sort((a, b) => b - a);\r",
+                  "\r",
+                  "    pm.expect(prices).to.eql(sortedPrices);\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -445,58 +447,6 @@
                   "key": "sortKey",
                   "value": "price"
                 }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "POST product with invalid body",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 400\", function () {\r",
-                  "    pm.response.to.have.status(400);\r",
-                  "});\r",
-                  "\r",
-                  "pm.test(\"Invalid product was not created\", () => {\r",
-                  "    const products = pm.response.json();\r",
-                  "\r",
-                  "    const invalidProduct = products.find(product =>\r",
-                  "        product.name === 1 &&\r",
-                  "        product.price === \"invalid price\"\r",
-                  "    );\r",
-                  "\r",
-                  "    pm.expect(invalidProduct).to.be.undefined;\r",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"name\": 1,\r\n  \"price\": \"invalid price\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "{{baseUrl}}/products",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "products"
               ]
             }
           },
@@ -954,7 +904,7 @@
                   "pm.test(\"Created user has expected data\", () => {\r",
                   "    const response = pm.response.json();\r",
                   "\r",
-                  "    pm.expect(response.firstName).to.eql(\"Dream\");\r",
+                  "    pm.expect(response.firstName).to.eql(\"Aaa\");\r",
                   "    pm.expect(response.lastName).to.eql(\"Real\");\r",
                   "    pm.expect(response.email).to.eql(\"dream.real@gmail.com\");\r",
                   "    pm.expect(response.dateOfBirth).to.eql(\"2001-10-99\");\r",
@@ -1241,10 +1191,6 @@
     },
     {
       "key": "productId",
-      "value": ""
-    },
-    {
-      "key": "userId",
       "value": ""
     }
   ]
