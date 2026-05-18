@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "turn-on-api": "shx cp mockApi/db_back_up.yaml mockApi/db_stage.yaml && npx yaml-server --hotReload=off --autoStart=off --port 3000 --database ./mockApi/db_stage.yaml"
+    "turn-on-api": "shx cp mockApi/db_back_up.yaml mockApi/db_stage.yaml && npx yaml-server --hotReload=off --autoStart=off --port 3000 --database ./mockApi/db_stage.yaml",
+    "test:api": "newman run store.collection.json",
+    "test:api:report": "newman run \"store.collection.json\" --reporters cli,htmlextra,junit --reporter-htmlextra-export \"newman/report.html\" --reporter-junit-export \"newman/report.xml\""
   },
   "keywords": [
     "api",
@@ -17,6 +19,8 @@
     "yaml-server": "^1.10.0"
   },
   "devDependencies": {
+    "newman": "^6.2.2",
+    "newman-reporter-htmlextra": "^1.23.1",
     "shx": "^0.4.0"
   }
 }

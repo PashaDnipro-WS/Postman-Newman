@@ -24,9 +24,9 @@ orders:
   - id: 2
     name: order2
     sku: 999921312423
-  - name: order3
-    sku: 123425445656765
-    id: 3
+  - id: 3
+    name: order2
+    sku: 999921312423312
 users:
   - id: 1
     firstName: Alice
