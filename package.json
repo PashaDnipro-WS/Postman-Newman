@@ -5,7 +5,7 @@
   "scripts": {
     "turn-on-api": "shx cp mockApi/db_back_up.yaml mockApi/db_stage.yaml && npx yaml-server --hotReload=off --autoStart=off --port 3000 --database ./mockApi/db_stage.yaml",
     "test:api": "newman run store.collection.json",
-    "test:api:report": "newman run \"store.collection.json\" --reporters cli,htmlextra,junit --reporter-htmlextra-export \"newman/report.html\" --reporter-junit-export \"newman/report.xml\""
+    "test:api:report": "newman run \"store.collection.json\" --reporters cli,htmlextra,junit --reporter-htmlextra-export \"newman/index.html\" --reporter-junit-export \"newman/report.xml\""
   },
   "keywords": [
     "api",
